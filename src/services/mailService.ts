@@ -13,7 +13,7 @@ export const sendMail = async (
   context: object
 ) => {
   const transporter = nodemailer.createTransport({
-    service: process.env.MAIL_HOST,
+    service: "gmail",
     secure: true,
     auth: {
       user: process.env.MAIL_USERNAME,
