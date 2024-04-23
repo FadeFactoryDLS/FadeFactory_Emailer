@@ -9,12 +9,20 @@ const port = 8081;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post("/", async (req: Request, res: Response) => {
-  console.log(req.body);
-
+app.post("/send-mail/promotion", async (req: Request, res: Response) => {
   const to: string = req.body.email;
   const subject: string = req.body.subject;
-  const mailTemplate: string = "Hello world";
+  const mailTemplate: string = "Promotion mail placeholder";
+
+  sendMail(to, subject, mailTemplate);
+
+  res.sendStatus(200);
+});
+
+app.post("/send-mail/reminder", async (req: Request, res: Response) => {
+  const to: string = req.body.email;
+  const subject: string = req.body.subject;
+  const mailTemplate: string = "Reminder mail placeholder";
 
   sendMail(to, subject, mailTemplate);
 
