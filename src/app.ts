@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/", async (req: Request, res: Response) => {
   console.log(req.body);
-  res.status(200).send("OK");
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {
