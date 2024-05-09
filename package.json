@@ -6,6 +6,8 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "tsx src/app.ts",
+    "build": "tsc",
+    "start-js": "node dist/app.js",
     "dev": "nodemon --watch src --exec tsx src/app.ts",
     "test": "node --import tsx --test test/*test.ts"
   },

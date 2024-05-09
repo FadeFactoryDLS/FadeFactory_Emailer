@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import { sendMail } from "./services/mailService";
+import { sendMail } from "./services/mailService.js";
 import dotenv from "dotenv";
 import Email from "./models/emailModel";
 import { BasicStrategy } from "passport-http";
