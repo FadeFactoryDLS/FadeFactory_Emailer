@@ -24,7 +24,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           touch .env
-          echo ${{ secrets.DOTENV }} | base64 --decode >> .env
+          echo ${{ secrets.DOTENV_BASE64_ENCODED }} | base64 --decode >> .env
           npm install
           npm run build --if-present
           npm run test --if-present
