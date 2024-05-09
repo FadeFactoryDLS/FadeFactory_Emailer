@@ -23,9 +23,9 @@ jobs:
 
       - name: create env file
         id: env_file_creation
-        env:
-          ENV_FILE: ${{ secrets.DOTENV }}
-        run: 'echo "$ENV_FILE" | base64 --decode > .env'
+        run: |
+          touch .env
+          echo ${{ secrets.DOTENV }} | base64 --decode >> .env
 
       - name: npm install, build, and test
         if: steps.env_file_creation.outcome == 'success'
