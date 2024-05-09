@@ -4,6 +4,59 @@ import sendMail from "../services/mailService.js";
 import basicHttpAuthentication from "../middleware/authenticate.js";
 const router: Router = Router();
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *      Email:
+ *          type: object
+ *          properties:
+ *              emailAddress:
+ *                  type: string
+ *              name:
+ *                  type: string
+ *              subject:
+ *                  type: string
+ *              message:
+ *                  type: string
+ *          required:
+ *              - emailAddress
+ *              - name
+ *              - subject
+ *              - message
+ *  securitySchemes:
+ *     basicAuth:
+ *      type: http
+ *      scheme: basic
+ *
+ * tags:
+ *  -name: Email
+ */
+
+/**
+ * @openapi
+ * /send-mail/promotion:
+ *  post:
+ *      tags:
+ *          - Email
+ *      summary: Send email to user in 'promotion' template
+ *      description: Send email to user in 'promotion' template
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Email'
+ *      responses:
+ *          "200":
+ *              description: Email sent successfully
+ *          "401":
+ *              description: Unauthorized
+ *          "500":
+ *              description: Internal Server Error
+ *      security:
+ *         - basicAuth: []
+ */
 router.post(
   "/promotion",
   basicHttpAuthentication,
@@ -27,6 +80,30 @@ router.post(
   }
 );
 
+/**
+ * @openapi
+ * /send-mail/reminder:
+ *  post:
+ *      tags:
+ *          - Email
+ *      summary: Send email to user in 'reminder' template
+ *      description: Send email to user in 'reminder' template
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Email'
+ *      responses:
+ *          "200":
+ *              description: Email sent successfully
+ *          "401":
+ *              description: Unauthorized
+ *          "500":
+ *              description: Internal Server Error
+ *      security:
+ *         - basicAuth: []
+ */
 router.post(
   "/reminder",
   basicHttpAuthentication,
