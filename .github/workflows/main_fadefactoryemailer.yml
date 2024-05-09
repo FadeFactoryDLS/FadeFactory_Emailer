@@ -21,15 +21,10 @@ jobs:
         with:
           node-version: "20.x"
 
-      - name: create env file
-        id: env_file_creation
+      - name: npm install, build, and test
         run: |
           touch .env
           echo ${{ secrets.DOTENV }} | base64 --decode >> .env
-
-      - name: npm install, build, and test
-        if: steps.env_file_creation.outcome == 'success'
-        run: |
           npm install
           npm run build --if-present
           npm run test --if-present
