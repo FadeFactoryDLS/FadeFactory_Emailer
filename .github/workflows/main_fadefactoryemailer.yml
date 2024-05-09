@@ -19,12 +19,10 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: "20.x"
+          node-version: '20.x'
 
       - name: npm install, build, and test
         run: |
-          touch .env
-          echo ${{ secrets.DOTENV_BASE64_ENCODED }} | base64 --decode >> .env
           npm install
           npm run build --if-present
           npm run test --if-present
@@ -42,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: "Production"
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -55,23 +53,19 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
-      - name: Create dotenv
-        run: |
-          touch .env
-          echo ${{ secrets.DOTENV_BASE64_ENCODED }} | base64 --decode >> .env
-
+      
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F09475749B684E719A0C122E3412C4CE }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AF1B45914680494196EC342575C82A20 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_82D2548FD7754038AA56D53AB8A9D660 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_520265FD252D438EAF0643962B24C29D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_63423BECA6164F4CA82FC3E05DD9EC55 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_93FED0F0ECA74AF297133DE977C4F469 }}
 
-      - name: "Deploy to Azure Web App"
+      - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "FadeFactoryEmailer"
-          slot-name: "Production"
+          app-name: 'FadeFactoryEmailer'
+          slot-name: 'Production'
           package: .
+          
