@@ -8,7 +8,7 @@ import passport from "passport";
 dotenv.config();
 
 const app: Express = express();
-const port = 8081;
+const port = process.env.PORT || 8081;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
