@@ -27,6 +27,10 @@ passport.use(
   })
 );
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("Email Service API is running!");
+});
+
 app.post(
   "/send-mail/promotion",
   passport.authenticate("basic", { session: false }),
