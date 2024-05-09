@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import Email from "../models/emailModel.js";
+import Email, { isEmailModel } from "../models/emailModel.js";
 import sendMail from "../services/mailService.js";
 import basicHttpAuthentication from "../middleware/authenticate.js";
 const router: Router = Router();
@@ -61,21 +61,27 @@ router.post(
   "/promotion",
   basicHttpAuthentication,
   async (req: Request, res: Response) => {
-    const emailData: Email = req.body;
+    try {
+      const emailData: Email = req.body;
+      isEmailModel(emailData);
 
-    if (emailData) {
-      const to: string = emailData.emailAddress;
-      const subject: string = emailData.subject;
-      const mailTemplate: string = "email_promotion";
-      const context: object = {
-        name: emailData.name,
-        subject: emailData.subject,
-        message: emailData.message,
-      };
+      if (emailData) {
+        const to: string = emailData.emailAddress;
+        const subject: string = emailData.subject;
+        const mailTemplate: string = "email_promotion";
+        const context: object = {
+          name: emailData.name,
+          subject: emailData.subject,
+          message: emailData.message,
+        };
 
-      sendMail(to, subject, mailTemplate, context);
+        sendMail(to, subject, mailTemplate, context);
 
-      res.sendStatus(200);
+        res.sendStatus(200);
+      }
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
     }
   }
 );
