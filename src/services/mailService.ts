@@ -6,7 +6,7 @@ import { NodemailerExpressHandlebarsOptions } from "nodemailer-express-handlebar
 
 dotenv.config();
 
-export const sendMail = async (
+const sendMail = async (
   to: string,
   subject: string,
   template: string,
@@ -50,3 +50,5 @@ export const sendMail = async (
     }
   });
 };
+
+export default sendMail;
