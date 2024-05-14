@@ -5,10 +5,11 @@
   "type": "module",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsx src/app.ts",
+    "start": "env-cmd tsx --require newrelic src/app.ts",
     "build": "tsc",
-    "start-js": "env-cmd node --loader newrelic/esm-loader.mjs --require newrelic dist/app.js",
+    "start-js": "node --loader newrelic/esm-loader.mjs --require newrelic dist/app.js",
     "dev": "nodemon --watch src --exec tsx src/app.ts",
+    "dev-newrelic": "nodemon --watch src --exec env-cmd tsx --require newrelic src/app.ts",
     "test": "node --import tsx --test test/*test.ts"
   },
   "keywords": [],
@@ -25,7 +26,9 @@
     "passport": "^0.7.0",
     "passport-http": "^0.3.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "tsx": "^4.10.2",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -39,8 +42,6 @@
     "@types/passport-http": "^0.3.11",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
-    "nodemon": "^3.1.0",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.5"
+    "nodemon": "^3.1.0"
   }
 }
