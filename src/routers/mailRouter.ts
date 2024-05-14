@@ -114,21 +114,27 @@ router.post(
   "/reminder",
   basicHttpAuthentication,
   async (req: Request, res: Response) => {
-    const emailData: Email = req.body;
+    try {
+      const emailData: Email = req.body;
+      isEmailModel(emailData);
 
-    if (emailData) {
-      const to: string = emailData.emailAddress;
-      const subject: string = emailData.subject;
-      const mailTemplate: string = "email_reminder";
-      const context: object = {
-        name: emailData.name,
-        subject: emailData.subject,
-        message: emailData.message,
-      };
+      if (emailData) {
+        const to: string = emailData.emailAddress;
+        const subject: string = emailData.subject;
+        const mailTemplate: string = "email_reminder";
+        const context: object = {
+          name: emailData.name,
+          subject: emailData.subject,
+          message: emailData.message,
+        };
 
-      sendMail(to, subject, mailTemplate, context);
+        sendMail(to, subject, mailTemplate, context);
 
-      res.sendStatus(200);
+        res.sendStatus(200);
+      }
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
     }
   }
 );

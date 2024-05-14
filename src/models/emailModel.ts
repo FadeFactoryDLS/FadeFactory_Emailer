@@ -5,9 +5,16 @@ interface emailModel {
   message: string;
 }
 
+const validateEmailRegex = (emailToValidate: string) => {
+  return emailToValidate.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+
 export function isEmailModel(arg: any): arg is emailModel {
   if (typeof arg.emailAddress !== "string")
     throw "emailAddress is not a string";
+  if (!validateEmailRegex(arg.emailAddress)) throw "Invalid email address";
   if (typeof arg.name !== "string") throw "name is not a string";
   if (typeof arg.subject !== "string") throw "subject is not a string";
   if (typeof arg.message !== "string") throw "message is not a string";

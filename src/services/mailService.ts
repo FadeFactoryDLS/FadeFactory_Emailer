@@ -34,17 +34,6 @@ const sendMail = async (
 
   transporter.use("compile", hbs(handlebarOptions));
 
-  const validateEmail = (emailToValidate: string) => {
-    return emailToValidate.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  };
-
-  if (!validateEmail(to)) {
-    console.error("Invalid email address");
-    return;
-  }
-
   const mailOptions = {
     from: process.env.MAIL_USERNAME,
     to: to,
@@ -55,7 +44,7 @@ const sendMail = async (
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error(error);
+      throw error;
     } else {
       console.info("Email sent: " + info.response);
     }
