@@ -11,13 +11,24 @@ const validateEmailRegex = (emailToValidate: string) => {
   );
 };
 
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
 export function isEmailModel(arg: any): arg is emailModel {
   if (typeof arg.emailAddress !== "string")
-    throw "emailAddress is not a string";
-  if (!validateEmailRegex(arg.emailAddress)) throw "Invalid email address";
-  if (typeof arg.name !== "string") throw "name is not a string";
-  if (typeof arg.subject !== "string") throw "subject is not a string";
-  if (typeof arg.message !== "string") throw "message is not a string";
+    throw new ValidationError("emailAddress is not a string");
+  if (!validateEmailRegex(arg.emailAddress))
+    throw new ValidationError("Invalid email address");
+  if (typeof arg.name !== "string")
+    throw new ValidationError("name is not a string");
+  if (typeof arg.subject !== "string")
+    throw new ValidationError("subject is not a string");
+  if (typeof arg.message !== "string")
+    throw new ValidationError("message is not a string");
   return true;
 }
 

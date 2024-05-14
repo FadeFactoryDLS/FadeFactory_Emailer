@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import Email, { isEmailModel } from "../models/emailModel.js";
+import Email, { ValidationError, isEmailModel } from "../models/emailModel.js";
 import sendMail from "../services/mailService.js";
 import basicHttpAuthentication from "../middleware/authenticate.js";
 const router: Router = Router();
@@ -50,6 +50,8 @@ const router: Router = Router();
  *      responses:
  *          "200":
  *              description: Email sent successfully
+ *          "400":
+ *              description: Bad Request
  *          "401":
  *              description: Unauthorized
  *          "500":
@@ -81,7 +83,11 @@ router.post(
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      if (error instanceof ValidationError) {
+        res.status(400).send(error.message);
+      } else {
+        res.sendStatus(500);
+      }
     }
   }
 );
@@ -103,6 +109,8 @@ router.post(
  *      responses:
  *          "200":
  *              description: Email sent successfully
+ *          "400":
+ *              description: Bad Request
  *          "401":
  *              description: Unauthorized
  *          "500":
@@ -134,7 +142,11 @@ router.post(
       }
     } catch (error) {
       console.error(error);
-      res.sendStatus(500);
+      if (error instanceof ValidationError) {
+        res.status(400).send(error.message);
+      } else {
+        res.sendStatus(500);
+      }
     }
   }
 );
