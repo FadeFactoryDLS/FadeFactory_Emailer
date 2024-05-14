@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import hbs from "nodemailer-express-handlebars";
 import path from "path";
+import newrelic from "newrelic";
 import { NodemailerExpressHandlebarsOptions } from "nodemailer-express-handlebars";
 
 dotenv.config();
@@ -44,6 +45,7 @@ const sendMail = async (
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      newrelic.noticeError(error);
       throw error;
     } else {
       console.info("Email sent: " + info.response);

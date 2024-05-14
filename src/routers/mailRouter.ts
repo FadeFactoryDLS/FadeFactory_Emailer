@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import Email, { ValidationError, isEmailModel } from "../models/emailModel.js";
 import sendMail from "../services/mailService.js";
 import basicHttpAuthentication from "../middleware/authenticate.js";
+import newrelic from "newrelic";
 const router: Router = Router();
 
 /**
@@ -82,11 +83,21 @@ router.post(
         res.sendStatus(200);
       }
     } catch (error) {
-      console.error(error);
-      if (error instanceof ValidationError) {
-        res.status(400).send(error.message);
-      } else {
-        res.sendStatus(500);
+      if (error instanceof Error) {
+        console.error(error);
+        if (error instanceof ValidationError) {
+          newrelic.noticeError(error, {
+            status: 400,
+            message: error.message,
+          });
+          res.status(400).send(error.message);
+        } else {
+          newrelic.noticeError(error, {
+            status: 500,
+            message: error.message,
+          });
+          res.sendStatus(500);
+        }
       }
     }
   }

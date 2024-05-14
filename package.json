@@ -7,7 +7,7 @@
   "scripts": {
     "start": "tsx src/app.ts",
     "build": "tsc",
-    "start-js": "node dist/app.js",
+    "start-js": "env-cmd node --loader newrelic/esm-loader.mjs --require newrelic dist/app.js",
     "dev": "nodemon --watch src --exec tsx src/app.ts",
     "test": "node --import tsx --test test/*test.ts"
   },
@@ -18,6 +18,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "newrelic": "^11.16.0",
     "nodemailer": "^6.9.13",
     "nodemailer-express-handlebars": "^6.1.2",
     "passport": "^0.7.0",
@@ -29,6 +30,7 @@
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "@types/newrelic": "^9.14.3",
     "@types/node": "^20.12.7",
     "@types/nodemailer": "^6.4.14",
     "@types/nodemailer-express-handlebars": "^4.0.5",
@@ -36,6 +38,7 @@
     "@types/passport-http": "^0.3.11",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
+    "env-cmd": "^10.1.0",
     "nodemon": "^3.1.0",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
